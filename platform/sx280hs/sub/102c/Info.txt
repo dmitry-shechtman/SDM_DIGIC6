@@ -1,0 +1,8 @@
+Dump SX280 firmware version 1.02C
+
+full 32MB dump by Raj, dumped with cBasic udumper
+from https://www.sendspace.com/file/amzcaz
+forum link: http://chdk.setepontos.com/index.php?topic=11550.msg113938#msg113938
+
+-----
+start address: FC000000

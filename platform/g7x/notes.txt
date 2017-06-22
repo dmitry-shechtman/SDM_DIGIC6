@@ -1,0 +1,91 @@
+************************************
+G7 X notes
+************************************
+This is an INCOMPLETE, UNFINISHED PORT.
+Many features and combinations of Canon settings have not been tested.
+
+CHDK is a hack, use at your own risk!
+This is a new port for a model with many hardware differences from previously
+supported models, so it is probably higher risk than most.
+
+The VER.REQ/VERS.REQ method does not work to obtain the Canon firmware
+version, use ACID or the firminfo Canon Basic script.
+
+General camera and CHDK port information
+****************************************
+G7 X has an adjustable aperture and ND filter.
+
+SD override does not work in AF, only MF or AF lock.
+
+Default alt button is PLAY, VIDEO and WIFI may also be used
+
+To start in shooting mode or wifi connect, hold down the corresponding button
+
+Raw blacklevel appears to be ~511, not the ~127 seen on other 12 bit cams
+
+G7 X uses propset 7. The values used in some propcases have changed.
+
+TESTED
+******
+llibtst.lua
+chdkptp cam tests
+PTP play/rec switch
+raw and remote hooks (in normal still shooting modes, broken some special modes)
+ND override
+SD override
+Tv, Av and bracketing
+ISO overrides and bracketing
+ - may have issues, full range not tested, some unexpected results in cont mode.
+setmode.lua - crashes with default 10ms delay, works with 100ms
+ubtest.bas
+hooktest.lua
+isobase.lua
+USB remote - plug test / remote hook only
+CHDK raw / DNG (in P, M, Tv, Av modes. AUTO not well tested, many others broken)
+
+NOT IMPLEMENTED
+***************
+dark frame control
+ - canon firmware enables darkframe for exposures over 30 sec
+video controls (movie_rec task)
+movie_status
+extra long exposures (exp_drv task)
+ - canon firmware supports up to 250 sec
+jogdial support
+ptp remote shoot / filewrite
+reboot with firmware update file
+script hard shutdown (shut_down(1))
+
+OTHER ISSUES
+************
+display updating is ugly. Below from sx280hs also applies to G7 X
+- framebuffer related features do not work, including
+ - zebra
+ - histogram
+ - edge overlay
+ - custom auto iso overexposure protection
+ - ptp live view
+- CHDK UI is erased / flashes every time low battery icons
+
+PROPCASE_RESOLUTION values differ from previous models
+- 0=L (20MP) 2=M1 (12MP) 3=M2 (4MP) 5=S (720x480) (sizes at 3:2 aspect)
+
+Occasional "SD card error" messages after boot seen in testing.
+Unclear if CHDK related, has gone away after reboot.
+
+Occasional very slow uploads with chdkptp.
+
+KNOWN BUGS
+**********
+- CHDK raw and remote hooks are not called in some special shooting modes (HDR, star trails etc)
+  This means script shoot() calls, scripts that use shoot hooks and synced remote do not function
+  correctly in these modes. This mostly affects modes that take multiple exposures for a single jpeg
+- CHDK raw address not correct in most special effect / scene modes
+  Using CHDK DNG in modes with an incorrect raw address may result in memory corruption and
+  potentially even hardware damage.
+- When booted with FI2 update, switching to hybrid auto causes a crash
+
+THANKS
+******
+* srsa_4c for the sx280hs port, and doing all the hard work to support digic 6.
+* The anonymous donor who provided the camera.
